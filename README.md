@@ -1,1 +1,1 @@
-# swe-tutorial-fullstack-development
+# fullstack-development
