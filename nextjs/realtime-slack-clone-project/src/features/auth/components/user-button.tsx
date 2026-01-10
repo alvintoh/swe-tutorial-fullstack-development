@@ -3,15 +3,17 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
+  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuthActions } from "@convex-dev/auth/react";
 import { AvatarImage } from "@radix-ui/react-avatar";
-import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
-import { Loader } from "lucide-react";
+import { Loader, LogOut } from "lucide-react";
 import { useCurrentUser } from "../api/use-current-user";
 
 export const UserButton = () => {
+  const { signOut } = useAuthActions();
   const { data, isLoading } = useCurrentUser();
 
   if (isLoading) {
@@ -31,11 +33,16 @@ export const UserButton = () => {
       <DropdownMenuTrigger className="outline-none relative">
         <Avatar className="size-10 hover:opacity-75 transition">
           <AvatarImage alt={name} src={image} />
-          <AvatarFallback>{avatarFallback}</AvatarFallback>
+          <AvatarFallback className="bg-sky-500 text-white">
+            {avatarFallback}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="center" side="right" className="w-60">
-        <DropdownMenuItem className="cursor-default justify-center"></DropdownMenuItem>
+        <DropdownMenuItem onClick={() => signOut()} className="h-10">
+          <LogOut className="size-4 mr-2" />
+          Log out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
