@@ -9,27 +9,38 @@ import {
 import { Input } from "../../../components/ui/input";
 
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/dist/client/components/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 import { useCreateWorkspace } from "../api/use-create-workspace";
 import { useCreateWorkspaceModal } from "../store/use-create-workspace-modal";
 
 export const CreateWorkspaceModal = () => {
+  const router = useRouter();
   const [open, setOpen] = useCreateWorkspaceModal();
+  const [name, setName] = useState("");
 
-  const { mutate } = useCreateWorkspace();
+  const { mutate, isPending, isError, isSuccess, data, error } =
+    useCreateWorkspace();
 
   const handleClose = () => {
     setOpen(false);
-    // TODO: Clear form
+    setName("");
   };
 
-  const handleSubmit = async () => {
-    const data = await mutate(
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    mutate(
       {
-        name: "Workspace 1",
+        name,
       },
       {
-        onSuccess: (data) => {},
-        onError: (error) => {},
+        onSuccess: (id) => {
+          toast.success("Workspace created");
+          router.push(`/workspace/${id}`);
+          handleClose();
+        },
       }
     );
   };
@@ -40,9 +51,10 @@ export const CreateWorkspaceModal = () => {
         <DialogHeader>
           <DialogTitle>Add a workspace</DialogTitle>
         </DialogHeader>
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <Input
-            value=""
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             disabled={false}
             required
             autoFocus
@@ -50,7 +62,7 @@ export const CreateWorkspaceModal = () => {
             placeholder="Workspace name e.g 'Work', 'Personal', 'Home'"
           />
           <div className="flex justify-end">
-            <Button disabled={false} onClick={handleSubmit}>
+            <Button disabled={false} type="submit">
               Create
             </Button>
           </div>
