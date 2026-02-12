@@ -10,14 +10,14 @@ import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
 import { useCreateWorkspaceModal } from "@/features/workspaces/store/use-create-workspace-modal";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { Loader, Plus } from "lucide-react";
-import { useRouter } from "next/dist/client/components/navigation";
+import { useRouter } from "next/navigation";
 
 export const WorkspaceSwitcher = () => {
   const router = useRouter();
   const workspaceId = useWorkspaceId();
-  const [_open, setOpen] = useCreateWorkspaceModal();
+  const [, setOpen] = useCreateWorkspaceModal();
 
-  const { data: workspaces, isLoading: workspacesLoading } = useGetWorkspaces();
+  const { data: workspaces } = useGetWorkspaces();
   const { data: workspace, isLoading: workspaceLoading } = useGetWorkspace({
     id: workspaceId,
   });
@@ -33,7 +33,10 @@ export const WorkspaceSwitcher = () => {
           {workspaceLoading ? (
             <Loader className="size-5 animate-spin shrink-0" />
           ) : (
-            workspace?.name.charAt(0).toUpperCase()
+            (workspace &&
+              !Array.isArray(workspace) &&
+              workspace.name?.charAt(0).toUpperCase()) ||
+            "W"
           )}
         </Button>
       </DropdownMenuTrigger>
@@ -42,7 +45,8 @@ export const WorkspaceSwitcher = () => {
           onClick={() => router.push(`/workspace/${workspaceId}`)}
           className="cursor-pointer flex-col justify-start items-start capitalize"
         >
-          {workspace?.name}
+          {(workspace && !Array.isArray(workspace) && workspace.name) ||
+            "Workspace"}
           <span className="text-sx text-muted-foreground">
             Active workspace
           </span>
@@ -53,14 +57,17 @@ export const WorkspaceSwitcher = () => {
             className="cursor-pointer capitalize"
             onClick={() => router.push(`/workspace/${workspace._id}`)}
           >
-            <div>{workspace.name.charAt(0).toUpperCase()}</div>
+            <div className="size-9 relative overflow-hidden bg-[#616061] text-white font-semibold text-lg rounded-md flex items-center justify-center mr-2">
+              {workspace.name.charAt(0).toUpperCase()}
+            </div>
+            <p className="truncate">{workspace.name}</p>
           </DropdownMenuItem>
         ))}
         <DropdownMenuItem
-          className="cursor-pointer"
+          className="cursor-pointer capitalize overflow-hidden truncate"
           onClick={() => setOpen(true)}
         >
-          <div className="size-9 relative overflow-hidden bg-[#F2F2F2] text-slate-800 font-semibold text-lg rounded-md flex items-center justify-center mr-2">
+          <div className="shrink-0 size-9 relative overflow-hidden bg-[#F2F2F2] text-slate-800 font-semibold text-lg rounded-md flex items-center justify-center mr-2">
             <Plus />
           </div>
           Create a new workspace

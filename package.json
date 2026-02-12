@@ -1,0 +1,12 @@
+{
+  "name": "fullstack-development",
+  "version": "1.0.0",
+  "description": "Full Stack Development Monorepo",
+  "private": true,
+  "scripts": {},
+  "devDependencies": {
+    "@commitlint/cli": "^20.4.1",
+    "@commitlint/config-conventional": "^20.4.1",
+    "lefthook": "^2.1.1"
+  }
+}
