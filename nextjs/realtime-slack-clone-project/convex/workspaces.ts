@@ -60,7 +60,7 @@ export const getById = query({
     const userId = await getAuthUserId(ctx);
 
     if (!userId) {
-      return [];
+      return null;
     }
 
     const member = await ctx.db

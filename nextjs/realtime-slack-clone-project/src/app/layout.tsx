@@ -3,9 +3,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 
+import { JotaiProvider } from "@/components/jotai-provider";
 import { CreateWorkspaceModal } from "@/features/workspaces/components/create-workspace-modal";
 
 import { ConvexClientProvider } from "./ConvexClientProvider";
+
 import "./globals.css";
 
 const geistSans = Geist({
@@ -35,9 +37,11 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ConvexClientProvider>
-            <Toaster />
-            <CreateWorkspaceModal />
-            {children}
+            <JotaiProvider>
+              <Toaster />
+              <CreateWorkspaceModal />
+              {children}
+            </JotaiProvider>
           </ConvexClientProvider>
         </body>
       </html>
