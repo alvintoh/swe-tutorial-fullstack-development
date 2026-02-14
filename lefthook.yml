@@ -7,12 +7,16 @@ commit-msg:
       run: bunx commitlint --edit {1}
 
 pre-commit:
-  parallel: false
+  parallel: true
   commands:
     lint:
       glob: "*.{js,ts,jsx,tsx}"
       root: "nextjs/realtime-slack-clone-project/"
       run: bun run lint {staged_files}
+
+    build:
+      root: "nextjs/realtime-slack-clone-project/"
+      run: bun run build
 
 pre-push:
   parallel: false
