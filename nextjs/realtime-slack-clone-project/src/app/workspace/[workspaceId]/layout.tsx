@@ -1,11 +1,12 @@
 "use client";
 
+import { useDefaultLayout } from "react-resizable-panels";
+
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { useDefaultLayout } from "react-resizable-panels";
 
 import { Sidebar } from "./sidebar";
 import { Toolbar } from "./toolbar";

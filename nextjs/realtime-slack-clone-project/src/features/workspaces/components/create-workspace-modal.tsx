@@ -1,17 +1,18 @@
 "use client";
 
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { useRouter } from "next/dist/client/components/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
+
+import { Button } from "@/components/ui/button";
+
 import {
   Dialog,
   DialogContent,
   DialogHeader,
 } from "../../../components/ui/dialog";
 import { Input } from "../../../components/ui/input";
-
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/dist/client/components/navigation";
-import { useState } from "react";
-import { toast } from "sonner";
 import { useCreateWorkspace } from "../api/use-create-workspace";
 import { useCreateWorkspaceModal } from "../store/use-create-workspace-modal";
 

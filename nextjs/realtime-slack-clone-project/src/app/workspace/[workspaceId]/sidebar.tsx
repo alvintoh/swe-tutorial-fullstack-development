@@ -1,6 +1,8 @@
-import { UserButton } from "@/features/auth/components/user-button";
 import { Bell, Home, MessagesSquare, MoreHorizontal } from "lucide-react";
 import { usePathname } from "next/navigation";
+
+import { UserButton } from "@/features/auth/components/user-button";
+
 import { SidebarButton } from "./sidebar-button";
 import { WorkspaceSwitcher } from "./workspace-switcher";
 

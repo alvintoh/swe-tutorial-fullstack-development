@@ -1,20 +1,21 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
+
 import { CreateWorkspaceModal } from "@/features/workspaces/components/create-workspace-modal";
-import { useEffect, useState } from "react";
 
 export const Modals = () => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
 
   if (!mounted) return null;
 
   return (
     <>
-      <CreateWorkspaceModal />;
+      <CreateWorkspaceModal />
     </>
   );
 };

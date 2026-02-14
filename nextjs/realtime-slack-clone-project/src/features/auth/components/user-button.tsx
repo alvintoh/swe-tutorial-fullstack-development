@@ -1,5 +1,9 @@
 "use client";
 
+import { useAuthActions } from "@convex-dev/auth/react";
+import { AvatarImage } from "@radix-ui/react-avatar";
+import { Loader, LogOut } from "lucide-react";
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -7,9 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAuthActions } from "@convex-dev/auth/react";
-import { AvatarImage } from "@radix-ui/react-avatar";
-import { Loader, LogOut } from "lucide-react";
+
 import { useCurrentUser } from "../api/use-current-user";
 
 export const UserButton = () => {
