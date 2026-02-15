@@ -1,6 +1,6 @@
 import { AlertTriangle, Loader } from "lucide-react";
 
-import { useCurrentMember } from "@/features/workspaces/api/use-current-member";
+import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 
