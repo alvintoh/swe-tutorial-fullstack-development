@@ -10,6 +10,7 @@ const generateCode = () => {
   ).join("");
   return code;
 };
+
 export const create = mutation({
   args: {
     name: v.string(),
@@ -33,6 +34,11 @@ export const create = mutation({
       userId,
       workspaceId,
       role: "admin",
+    });
+
+    await ctx.db.insert("channels", {
+      name: "general",
+      workspaceId,
     });
 
     return workspaceId;
