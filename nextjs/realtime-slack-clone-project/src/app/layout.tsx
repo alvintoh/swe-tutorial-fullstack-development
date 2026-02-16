@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 
 import { JotaiProvider } from "@/components/jotai-provider";
-import { CreateWorkspaceModal } from "@/features/workspaces/components/create-workspace-modal";
+import { Modals } from "@/components/ui/modals";
 
 import { ConvexClientProvider } from "./ConvexClientProvider";
 
@@ -39,7 +39,7 @@ export default function RootLayout({
           <ConvexClientProvider>
             <JotaiProvider>
               <Toaster />
-              <CreateWorkspaceModal />
+              <Modals />
               {children}
             </JotaiProvider>
           </ConvexClientProvider>
