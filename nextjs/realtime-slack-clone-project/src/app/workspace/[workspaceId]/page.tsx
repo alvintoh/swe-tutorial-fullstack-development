@@ -28,16 +28,21 @@ const WorkspaceIdPage = () => {
       return;
     }
 
-    router.replace(`/workspace/${workspaceId}/channel/${channelId}`);
-  }, [channelId, workspaceLoading, channelsLoading, workspace, router, workspaceId]);
-
-  useEffect(() => {
-    if (workspaceLoading || channelsLoading || !workspace || channelId) {
-      return;
+    if (channelId) {
+      router.replace(`/workspace/${workspaceId}/channel/${channelId}`);
+    } else if (!open) {
+      setOpen(true);
     }
-
-    setOpen(true);
-  }, [channelId, workspaceLoading, channelsLoading, workspace, setOpen]);
+  }, [
+    channelId,
+    workspaceLoading,
+    channelsLoading,
+    workspace,
+    open,
+    setOpen,
+    router,
+    workspaceId,
+  ]);
 
   if (workspaceLoading || channelsLoading) {
     return (
