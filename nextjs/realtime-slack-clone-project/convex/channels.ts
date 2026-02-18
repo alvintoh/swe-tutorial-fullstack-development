@@ -28,6 +28,17 @@ export const create = mutation({
 
     const parsedName = args.name.replace(/\s+/g, "-").toLowerCase();
 
+    const existingChannel = await ctx.db
+      .query("channels")
+      .withIndex("by_workspaceId", (q) =>
+        q.eq("workspaceId", args.workspaceId).eq("name", parsedName)
+      )
+      .unique();
+
+    if (existingChannel) {
+      throw new Error("Channel with this name already exists");
+    }
+
     const channel = await ctx.db.insert("channels", {
       name: parsedName,
       workspaceId: args.workspaceId,

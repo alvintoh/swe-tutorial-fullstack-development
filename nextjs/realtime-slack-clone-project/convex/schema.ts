@@ -20,7 +20,7 @@ const schema = defineSchema({
   channels: defineTable({
     name: v.string(),
     workspaceId: v.id("workspaces"),
-  }).index("by_workspaceId", ["workspaceId"]),
+  }).index("by_workspaceId", ["workspaceId", "name"]),
 });
 
 export default schema;

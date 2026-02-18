@@ -1,7 +1,7 @@
 "use client";
 
 const ChannelIdPage = () => {
-  return <div>Workspace id page</div>;
+  return <div>Channel ID page</div>;
 };
 
 export default ChannelIdPage;
