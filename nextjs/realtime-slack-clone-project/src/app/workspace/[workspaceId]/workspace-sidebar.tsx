@@ -11,8 +11,8 @@ import { useCreateChannelModal } from "@/features/channels/store/use-create-chan
 import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { useGetMembers } from "@/features/members/api/use-get-members";
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
+import { useChannelId } from "@/hooks/use-channel-id";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import { useChannelId } from "@/hooks/use-workspace-id copy";
 
 import { SidebarItem } from "./sidebar-item";
 import { UserItem } from "./user-item";
