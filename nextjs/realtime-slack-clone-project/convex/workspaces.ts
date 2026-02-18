@@ -132,7 +132,10 @@ export const get = query({
       throw new Error("Unauthorized");
     }
 
-    return await ctx.db.query("workspaces").collect();
+    return await ctx.db
+      .query("workspaces")
+      .withIndex("by_userId", (q) => q.eq("userId", userId))
+      .collect();
   },
 });
 

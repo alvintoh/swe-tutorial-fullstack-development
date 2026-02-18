@@ -4,6 +4,7 @@ import { Loader } from "lucide-react";
 import { useRouter } from "next/dist/client/components/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useMemo } from "react";
 import VerificationInput from "react-verification-input";
 import { toast } from "sonner";
 
@@ -19,6 +20,14 @@ const JoinPage = () => {
 
   const { mutate, isPending } = useJoin();
   const { data, isLoading } = useGetWorkspaceInfo({ id: workspaceId });
+
+  const isMember = useMemo(() => data?.isMember, [data?.isMember]);
+
+  useEffect(() => {
+    if (isMember) {
+      router.replace(`/workspace/${workspaceId}`);
+    }
+  }, [isMember, router, workspaceId]);
 
   const handleComplete = (value: string) => {
     mutate(

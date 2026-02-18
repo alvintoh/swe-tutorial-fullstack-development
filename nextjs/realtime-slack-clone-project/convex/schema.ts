@@ -8,7 +8,7 @@ const schema = defineSchema({
     name: v.string(),
     userId: v.id("users"),
     joinCode: v.string(),
-  }),
+  }).index("by_userId", ["userId"]),
   members: defineTable({
     userId: v.id("users"),
     workspaceId: v.id("workspaces"),
