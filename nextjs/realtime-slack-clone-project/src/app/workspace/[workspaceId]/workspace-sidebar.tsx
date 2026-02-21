@@ -6,7 +6,7 @@ import {
   SendHorizontal,
 } from "lucide-react";
 
-import { useGetChannels } from "@/features/channels/api/use-get-channel";
+import { useGetChannels } from "@/features/channels/api/use-get-channels";
 import { useCreateChannelModal } from "@/features/channels/store/use-create-channel-modal";
 import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { useGetMembers } from "@/features/members/api/use-get-members";
