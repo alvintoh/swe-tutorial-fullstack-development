@@ -1,3 +1,4 @@
+import { Skin } from "@emoji-mart/data";
 import { ImageIcon, Smile } from "lucide-react";
 import Quill, { Delta, Op, QuillOptions } from "quill";
 import { RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -8,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import "quill/dist/quill.snow.css";
 
+import { EmojiPopover } from "./emoji-popover";
 import { Hint } from "./hint";
 
 type EditorValue = {
@@ -128,6 +130,12 @@ const Editor = ({
     }
   };
 
+  const onEmojiSelect = (emoji: Skin) => {
+    const quill = quillRef.current;
+
+    quill?.insertText(quill?.getSelection()?.index || 0, emoji.native);
+  };
+
   const isEmpty = text.replace(/<(.\n)*?>/g, "").trim().length === 0;
 
   return (
@@ -148,14 +156,16 @@ const Editor = ({
             </Button>
           </Hint>
           <Hint label="Emoji">
-            <Button
-              disabled={disabled}
-              size="icon-sm"
-              variant="ghost"
-              onClick={() => {}}
-            >
-              <Smile className="size-4" />
-            </Button>
+            <EmojiPopover onEmojiSelect={onEmojiSelect}>
+              <Button
+                disabled={disabled}
+                size="icon-sm"
+                variant="ghost"
+                onClick={() => {}}
+              >
+                <Smile className="size-4" />
+              </Button>
+            </EmojiPopover>
           </Hint>
           <Hint label="Image">
             <Button
@@ -204,11 +214,18 @@ const Editor = ({
           )}
         </div>
       </div>
-      <div className="p-2 text-[10px] text-muted-foreground flex justify-end">
-        <p>
-          <strong>Shift + Return</strong> to add a new line
-        </p>
-      </div>
+      {variant === "create" && (
+        <div
+          className={cn(
+            "text-[10px] text-muted-foreground flex justify-end opacity-0 transition",
+            !isEmpty && "opacity-100"
+          )}
+        >
+          <p>
+            <strong>Shift + Return</strong> to add a new line
+          </p>
+        </div>
+      )}
     </div>
   );
 };
