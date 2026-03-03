@@ -2,6 +2,8 @@ import { format, isToday, isYesterday } from "date-fns";
 
 import { GetMessagesReturnType } from "@/features/messages/api/use-get-messages";
 
+import { Message } from "./message";
+
 interface MessageListProps {
   memberName?: string;
   memberImage?: string;
@@ -46,14 +48,15 @@ export const MessageList = ({
   );
   return (
     <div className="flex-1 flex flex-col-reverse pb-4 overflow-y-auto messages-scrollbar">
-      {Object.entries(groupedMessages ?? {}).map(([dateKey, messages]) => (
-        <div key={dateKey} className="text-center my-2 relative">
-          <hr className="absolute left-0 right-0 border-t border-gray-300" />
-          <span className="relative inline-block bg-white px-4 py-1 rounded-full text-xs border border-gray-300 shadow-sm">
-            {formatDateLabel(dateKey)}
-          </span>
-          {/* {messages.map((message, index) => (
-            return (
+      {Object.entries(groupedMessages || {}).map(([dateKey, messages]) => (
+        <div key={dateKey}>
+          <div className="text-center my-2 relative">
+            <hr className="absolute left-0 right-0 border-t border-gray-300" />
+            <span className="relative inline-block bg-white px-4 py-1 rounded-full text-xs border border-gray-300 shadow-sm">
+              {formatDateLabel(dateKey)}
+            </span>
+          </div>
+          {messages.map((message, index) => (
             <Message
               key={message._id}
               id={message._id}
@@ -64,7 +67,7 @@ export const MessageList = ({
               reactions={message.reactions}
               body={message.body}
               image={message.image}
-              updatedAt={message.updatedTime}
+              updatedAt={message.updatedAt}
               createdAt={message._creationTime}
               isEditing={false}
               setEditingId={() => {}}
@@ -74,7 +77,7 @@ export const MessageList = ({
               channelCreationTime={channelCreationTime}
               variant={variant}
             />
-            )}   */}
+          ))}
         </div>
       ))}
     </div>

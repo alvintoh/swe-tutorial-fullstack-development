@@ -161,7 +161,7 @@ export const get = query({
             return {
               ...message,
               image,
-              member: user,
+              user: user,
               reactions: reactionsWithoutMemberIdProperty,
               threadCount: thread.count,
               threadImage: thread.image,
