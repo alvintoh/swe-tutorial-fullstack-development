@@ -186,3 +186,9 @@ body,
   font-weight: 400 !important;
   @apply truncate;
 }
+
+.ql-tooltip {
+  left: 120px !important;
+  z-index: 10 !important;
+  border-radius: 0.375rem !important;
+}

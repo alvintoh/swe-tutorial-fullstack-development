@@ -9,14 +9,14 @@ const Renderer = ({ value }: RendererProps) => {
   const [isEmpty, setIsEmpty] = useState(false);
   const rendererRef = useRef<HTMLDivElement>(null);
 
-  async function isTextEmpty(quill: Quill): Promise<boolean> {
-    return (
+  const isTextEmpty = (quill: Quill): Promise<boolean> => {
+    return Promise.resolve(
       quill
         .getText()
         .replace(/<(.|\n)*?>/g, "")
         .trim().length === 0
     );
-  }
+  };
 
   useEffect(() => {
     if (!rendererRef.current) return;
