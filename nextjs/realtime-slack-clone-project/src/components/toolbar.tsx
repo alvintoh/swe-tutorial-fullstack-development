@@ -58,16 +58,18 @@ export const Toolbar = ({
             </Button>
           </Hint>
         )}
-        <Hint label="Delete message">
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            disabled={isPending}
-            onClick={handleDelete}
-          >
-            <Trash size={4} />
-          </Button>
-        </Hint>
+        {isAuthor && (
+          <Hint label="Delete message">
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              disabled={isPending}
+              onClick={handleDelete}
+            >
+              <Trash size={4} />
+            </Button>
+          </Hint>
+        )}
       </div>
     </div>
   );
