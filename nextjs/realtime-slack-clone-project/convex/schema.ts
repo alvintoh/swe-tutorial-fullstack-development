@@ -48,12 +48,12 @@ const schema = defineSchema({
     ]),
   reactions: defineTable({
     workspaceId: v.id("workspaces"),
-    message: v.id("messages"),
+    messageId: v.id("messages"),
     memberId: v.id("members"),
     value: v.string(),
   })
     .index("by_workspaceId", ["workspaceId"])
-    .index("by_messageId", ["message"])
+    .index("by_messageId", ["messageId"])
     .index("by_memberId", ["memberId"]),
 });
 
