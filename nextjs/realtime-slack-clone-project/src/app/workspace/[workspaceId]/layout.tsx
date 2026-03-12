@@ -1,5 +1,6 @@
 "use client";
 
+import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDefaultLayout, type LayoutStorage } from "react-resizable-panels";
 
@@ -8,6 +9,10 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { Thread } from "@/features/messages/components/thread";
+import { usePanel } from "@/hooks/use-panel";
+
+import { Id } from "../../../../convex/_generated/dataModel";
 
 import { Sidebar } from "./sidebar";
 import { Toolbar } from "./toolbar";
@@ -45,6 +50,9 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
     id: "ca-workspace-layout",
     storage: cookieStorage,
   });
+  const { parentMessageId, onCloseMessage } = usePanel();
+
+  const showPanel = !!parentMessageId;
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -77,6 +85,23 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
           <ResizablePanel id="content" minSize={20}>
             {children}
           </ResizablePanel>
+          {showPanel && (
+            <>
+              <ResizableHandle withHandle />
+              <ResizablePanel minSize={20} defaultSize={29}>
+                {parentMessageId ? (
+                  <Thread
+                    messageId={parentMessageId as Id<"messages">}
+                    onClose={onCloseMessage}
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center">
+                    <Loader className="size-5 animate-spin text-muted-foreground" />
+                  </div>
+                )}
+              </ResizablePanel>
+            </>
+          )}
         </ResizablePanelGroup>
       </div>
     </div>
