@@ -192,7 +192,7 @@ export const Message = ({
                 isAuthor={isAuthor}
                 isPending={isPending}
                 handleEdit={() => setEditingId(id)}
-                handleThread={() => {}}
+                handleThread={() => onOpenMessage(id)}
                 handleDelete={handleDelete}
                 handleReaction={handleReaction}
                 hideThreadButton={hideThreadButton}
@@ -269,7 +269,7 @@ export const Message = ({
               isAuthor={isAuthor}
               isPending={isPending}
               handleEdit={() => setEditingId(id)}
-              handleThread={() => {}}
+              handleThread={() => onOpenMessage(id)}
               handleDelete={handleDelete}
               handleReaction={handleReaction}
               hideThreadButton={hideThreadButton}

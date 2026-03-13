@@ -50,9 +50,16 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
     id: "ca-workspace-layout",
     storage: cookieStorage,
   });
-  const { parentMessageId, onCloseMessage } = usePanel();
 
+  const defaultContentPanelSize = Number(
+    cookieStorage.getItem("ca-content-panel-size") ?? 40
+  );
+
+  const { parentMessageId, onCloseMessage } = usePanel();
   const showPanel = !!parentMessageId;
+  const defaultThreadSize = Number(
+    cookieStorage.getItem("ca-thread-panel-size") ?? 25
+  );
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -75,20 +82,34 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
         >
           <ResizablePanel
             id="sidebar"
-            defaultSize={20}
-            minSize={11}
+            defaultSize={10}
+            minSize={10}
             className="bg-[#5E2C5F]"
           >
             <WorkspaceSidebar />
           </ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel id="content" minSize={20}>
+          <ResizablePanel
+            id="content"
+            minSize={20}
+            defaultSize={defaultContentPanelSize}
+            onResize={(size) =>
+              cookieStorage.setItem("ca-content-panel-size", String(size))
+            }
+          >
             {children}
           </ResizablePanel>
           {showPanel && (
             <>
               <ResizableHandle withHandle />
-              <ResizablePanel minSize={20} defaultSize={29}>
+              <ResizablePanel
+                id="thread"
+                minSize={25}
+                defaultSize={defaultThreadSize}
+                onResize={(size) =>
+                  cookieStorage.setItem("ca-thread-panel-size", String(size))
+                }
+              >
                 {parentMessageId ? (
                   <Thread
                     messageId={parentMessageId as Id<"messages">}
