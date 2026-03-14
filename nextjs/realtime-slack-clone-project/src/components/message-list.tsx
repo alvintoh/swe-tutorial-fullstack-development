@@ -98,9 +98,9 @@ export const MessageList = ({
                 setEditingId={setEditingId}
                 isCompact={isCompact}
                 hideThreadButton={variant === "thread"}
-                channelName={channelName}
-                channelCreationTime={channelCreationTime}
-                variant={variant}
+                threadCount={message.threadCount}
+                threadImage={message.threadImage}
+                threadTimestamp={message.threadTimestamp}
               />
             );
           })}
@@ -122,10 +122,7 @@ export const MessageList = ({
             return () => observer.disconnect();
           }
         }}
-      ></div>
-      <div>
-        <button onClick={loadMore}>Load More</button>
-      </div>
+      />
       {isLoadingMore && (
         <div className="text-center my-2 relative">
           <hr className="absolute left-0 right-0 border-t border-gray-300" />
