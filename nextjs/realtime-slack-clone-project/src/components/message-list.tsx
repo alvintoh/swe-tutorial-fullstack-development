@@ -9,6 +9,7 @@ import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { Id } from "../../convex/_generated/dataModel";
 
 import { ChannelHero } from "./channel-hero";
+import { ConversationHero } from "./conversation-hero";
 import { Message } from "./message";
 
 const TIME_THRESHOLD = 5;
@@ -66,7 +67,7 @@ export const MessageList = ({
       {Object.entries(groupedMessages || {}).map(([dateKey, messages]) => (
         <div key={dateKey}>
           <div className="text-center my-2 relative">
-            <hr className="absolute left-0 right-0 border-t border-gray-300" />
+            <hr className="absolute top-1/2 -translate-y-1/2 left-0 right-0 border-t border-gray-300" />
             <span className="relative inline-block bg-white px-4 py-1 rounded-full text-xs border border-gray-300 shadow-sm">
               {formatDateLabel(dateKey)}
             </span>
@@ -133,6 +134,9 @@ export const MessageList = ({
       )}
       {variant === "channel" && channelName && channelCreationTime && (
         <ChannelHero name={channelName} creationTime={channelCreationTime} />
+      )}
+      {variant === "conversation" && (
+        <ConversationHero name={memberName} image={memberImage} />
       )}
     </div>
   );

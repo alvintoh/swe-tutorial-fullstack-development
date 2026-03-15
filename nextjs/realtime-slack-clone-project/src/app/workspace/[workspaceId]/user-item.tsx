@@ -1,6 +1,6 @@
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { cva, VariantProps } from "class-variance-authority";
-import Link from "next/dist/client/link";
+import Link from "next/link";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
