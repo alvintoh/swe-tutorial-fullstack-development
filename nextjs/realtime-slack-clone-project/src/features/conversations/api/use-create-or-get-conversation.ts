@@ -39,10 +39,8 @@ export const useCreateOrGetConversation = () => {
         setStatus("pending");
 
         const response = await mutation(values);
-        setData(response);
         options?.onSuccess?.(response);
       } catch (error) {
-        setError(error as Error);
         options?.onError?.(error as Error);
         if (options?.throwError) {
           throw error;

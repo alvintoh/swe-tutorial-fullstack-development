@@ -8,10 +8,15 @@ import { useCreateOrGetConversation } from "@/features/conversations/api/use-cre
 import { useMemberId } from "@/hooks/use-member-id";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 
+import { Id } from "../../../../../../convex/_generated/dataModel";
+
+import Conversation from "./conversation";
+
 const MemberIdPage = () => {
   const memberId = useMemberId();
   const workspaceId = useWorkspaceId();
-  const [conversationId, setConversationId] = useState<string | null>(null);
+  const [conversationId, setConversationId] =
+    useState<Id<"conversations"> | null>(null);
 
   const { data, mutate, isPending } = useCreateOrGetConversation();
 
@@ -48,7 +53,7 @@ const MemberIdPage = () => {
     );
   }
 
-  return <div>{JSON.stringify(data)}</div>;
+  return <Conversation id={conversationId} />;
 };
 
 export default MemberIdPage;
