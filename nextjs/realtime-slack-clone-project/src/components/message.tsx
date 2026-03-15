@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { Doc, Id } from "../../convex/_generated/dataModel";
 
 import { Hint } from "./hint";
+import { ThreadBar } from "./thread-bar";
 import { Thumbnail } from "./thumbnail";
 import { Toolbar } from "./toolbar";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -48,10 +49,8 @@ interface MessageProps {
   hideThreadButton?: boolean;
   threadCount?: number;
   threadImage?: string;
+  threadName?: string;
   threadTimestamp?: number;
-  channelName?: string;
-  channelCreationTime?: number;
-  variant?: "channel" | "thread" | "conversation";
 }
 
 const formatFullTime = (date: Date) => {
@@ -76,11 +75,9 @@ export const Message = ({
   threadCount,
   threadImage,
   threadTimestamp,
-  channelName,
-  channelCreationTime,
-  variant,
+  threadName,
 }: MessageProps) => {
-  const { parentMessageId, onOpenMessage, onCloseMessage } = usePanel();
+  const { parentMessageId, onOpenMessage, onOpenProfile, onClose } = usePanel();
 
   const [ConfirmDialog, confirm] = useConfirm(
     "Delete message",
@@ -111,7 +108,7 @@ export const Message = ({
           toast.success("Message deleted");
 
           if (parentMessageId === id) {
-            onCloseMessage();
+            onClose();
           }
         },
         onError: () => {
@@ -218,7 +215,7 @@ export const Message = ({
         )}
       >
         <div className="flex items-center gap-3">
-          <button>
+          <button onClick={() => onOpenProfile(memberId)}>
             <Avatar>
               <AvatarImage src={authorImage} />
               <AvatarFallback>{avatarFallback}</AvatarFallback>
@@ -240,7 +237,7 @@ export const Message = ({
             <div className="flex flex-col w-full overflow-hidden">
               <div className="text-sm">
                 <button
-                  onClick={() => {}}
+                  onClick={() => onOpenProfile(memberId)}
                   className="font-bold text-primary hover:underline"
                 >
                   {authorName}
@@ -261,6 +258,13 @@ export const Message = ({
                   </span>
                 ) : null}
                 <Reactions data={reactions} onChange={handleReaction} />
+                <ThreadBar
+                  count={threadCount}
+                  image={threadImage}
+                  timestamp={threadTimestamp}
+                  name={threadName}
+                  onClick={() => onOpenMessage(id)}
+                />
               </div>
             </div>
           )}

@@ -4,6 +4,7 @@ import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDefaultLayout, type LayoutStorage } from "react-resizable-panels";
 
+import { Profile } from "@/components/profile";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -55,8 +56,14 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
     cookieStorage.getItem("ca-content-panel-size") ?? 40
   );
 
-  const { parentMessageId, onCloseMessage } = usePanel();
-  const showPanel = !!parentMessageId;
+  const {
+    parentMessageId,
+    profileMemberId,
+    onOpenProfile,
+    onOpenMessage,
+    onClose,
+  } = usePanel();
+  const showPanel = !!parentMessageId || !!profileMemberId;
   const defaultThreadSize = Number(
     cookieStorage.getItem("ca-thread-panel-size") ?? 25
   );
@@ -113,7 +120,12 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
                 {parentMessageId ? (
                   <Thread
                     messageId={parentMessageId as Id<"messages">}
-                    onClose={onCloseMessage}
+                    onClose={onClose}
+                  />
+                ) : profileMemberId ? (
+                  <Profile
+                    memberId={profileMemberId as Id<"members">}
+                    onClose={onClose}
                   />
                 ) : (
                   <div className="flex h-full items-center justify-center">
