@@ -52,21 +52,8 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
     storage: cookieStorage,
   });
 
-  const defaultContentPanelSize = Number(
-    cookieStorage.getItem("ca-content-panel-size") ?? 40
-  );
-
-  const {
-    parentMessageId,
-    profileMemberId,
-    onOpenProfile,
-    onOpenMessage,
-    onClose,
-  } = usePanel();
+  const { parentMessageId, profileMemberId, onClose } = usePanel();
   const showPanel = !!parentMessageId || !!profileMemberId;
-  const defaultThreadSize = Number(
-    cookieStorage.getItem("ca-thread-panel-size") ?? 25
-  );
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -84,13 +71,18 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
         <Sidebar />
         <ResizablePanelGroup
           orientation="horizontal"
-          defaultLayout={defaultLayout}
+          defaultLayout={
+            defaultLayout ??
+            (showPanel
+              ? { sidebar: 20, content: 55, thread: 25 }
+              : { sidebar: 20, content: 80 })
+          }
           onLayoutChange={onLayoutChanged}
         >
           <ResizablePanel
             id="sidebar"
-            defaultSize={10}
-            minSize={10}
+            defaultSize={20}
+            minSize={11}
             className="bg-[#5E2C5F]"
           >
             <WorkspaceSidebar />
@@ -99,24 +91,14 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
           <ResizablePanel
             id="content"
             minSize={20}
-            defaultSize={defaultContentPanelSize}
-            onResize={(size) =>
-              cookieStorage.setItem("ca-content-panel-size", String(size))
-            }
+            defaultSize={showPanel ? 55 : 80}
           >
             {children}
           </ResizablePanel>
           {showPanel && (
             <>
               <ResizableHandle withHandle />
-              <ResizablePanel
-                id="thread"
-                minSize={25}
-                defaultSize={defaultThreadSize}
-                onResize={(size) =>
-                  cookieStorage.setItem("ca-thread-panel-size", String(size))
-                }
-              >
+              <ResizablePanel id="thread" minSize={20} defaultSize={20}>
                 {parentMessageId ? (
                   <Thread
                     messageId={parentMessageId as Id<"messages">}

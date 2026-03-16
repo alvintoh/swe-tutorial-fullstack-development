@@ -19,12 +19,12 @@ export const ThreadBar = ({
   onClick,
 }: ThreadBarProps) => {
   const avatarFallback = name?.charAt(0).toUpperCase();
-  if (!count || !timestamp || !image) return null;
+  if (!count || !timestamp) return null;
 
   return (
     <button
       onClick={onClick}
-      className="p-1 rounded-full hover:bg-white border border-transparent hover:border-border flex items-center justify start group/thread-bar transition max-w-150"
+      className="p-1 rounded-full hover:bg-white border border-transparent hover:border-border flex items-center justify-start group/thread-bar transition max-w-150"
     >
       <div className="flex items-center gap-2 overflow-hidden">
         <Avatar className="size-6 shrink-0">
@@ -36,7 +36,6 @@ export const ThreadBar = ({
         </span>
         <span className="text-xs text-muted-foreground truncate group-hover/thread-bar:hidden block">
           Last reply {formatDistanceToNow(timestamp, { addSuffix: true })}
-          {name}
         </span>
         <span className="text-xs text-muted-foreground truncate group-hover/thread-bar:block hidden">
           View thread
