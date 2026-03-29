@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git mv:*)",
+      "Bash(powershell -Command \"Rename-Item -Path ''C:\\\\development\\\\swe-tutorials\\\\fullstack-development\\\\nextjs\\\\realtime-slack-clone-project'' -NewName ''C:\\\\development\\\\swe-tutorials\\\\fullstack-development\\\\convex-chat'' -Force\")",
+      "Bash(powershell -Command \"Move-Item -Path ''C:\\\\development\\\\swe-tutorials\\\\fullstack-development\\\\nextjs\\\\realtime-slack-clone-project'' -Destination ''C:\\\\development\\\\swe-tutorials\\\\fullstack-development\\\\convex-chat''\")",
+      "Bash(git rm:*)"
+    ]
+  }
+}

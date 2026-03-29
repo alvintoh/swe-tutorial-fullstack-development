@@ -1,4 +1,4 @@
-# real-time-slack-clone-project
+# convex-chat
 
 # Validate commit messages follow Conventional Commits format
 commit-msg:
@@ -11,20 +11,16 @@ pre-commit:
   commands:
     lint:
       glob: "*.{js,ts,jsx,tsx}"
-      root: "nextjs/realtime-slack-clone-project/"
       run: bun run lint {staged_files}
 
     build:
-      root: "nextjs/realtime-slack-clone-project/"
       run: bun run build
 
 pre-push:
   parallel: false
   commands:
     build:
-      root: "nextjs/realtime-slack-clone-project/"
       run: bun run build
 
     test:
-      root: "nextjs/realtime-slack-clone-project/"
       run: bun test
